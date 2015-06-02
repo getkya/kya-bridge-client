@@ -1,21 +1,21 @@
 module KyaBridgeClient
   class PostRetreiver
-    def initialize(post_cursor)
+    def initialize(post_collection, post_cursor)
+      @post_collection = post_collection
       @post_cursor = post_cursor
     end
 
     def call
-      result = []
       loop do
-        result += post_cursor.next_posts
+        post_collection.add(post_cursor.next_posts)
         break unless post_cursor.has_more_posts?
       end
 
-      result
+      post_collection
     end
 
     private
 
-    attr_reader :post_cursor
+    attr_reader :post_cursor, :post_collection
   end
 end

@@ -1,8 +1,9 @@
 require "spec_helper"
+require "spec_helper"
 
 module KyaBridgeClient
   RSpec.describe PostRetreiver do
-    subject(:retreiver) { PostRetreiver.new(post_cursor) }
+    subject(:retreiver) { PostRetreiver.new(post_collection, post_cursor) }
 
     let(:post_cursor) {
       double(
@@ -12,7 +13,9 @@ module KyaBridgeClient
       )
     }
 
-    let(:next_posts)      { [:a, :b] }
+    let(:post_collection) { double(:post_collection, :add => nil) }
+
+    let(:next_posts)      { double(:posts) }
     let(:has_more_posts?) { false }
 
     describe "#call" do
@@ -23,8 +26,13 @@ module KyaBridgeClient
           expect(post_cursor).to have_received(:next_posts)
         end
 
-        it "returns the posts" do
-          expect(retreiver.call).to eq(next_posts)
+        it "returns the post collection" do
+          expect(retreiver.call).to eq(post_collection)
+        end
+
+        it "joins the posts into a post collection" do
+          retreiver.call
+          expect(post_collection).to have_received(:add).with(next_posts)
         end
       end
 
@@ -38,8 +46,9 @@ module KyaBridgeClient
           expect(post_cursor).to have_received(:next_posts).exactly(2).times
         end
 
-        it "returns the concatenated posts" do
-          expect(retreiver.call).to eq(next_posts + next_posts)
+        it "joins the posts each time" do
+          retreiver.call
+          expect(post_collection).to have_received(:add).exactly(2).times
         end
       end
     end

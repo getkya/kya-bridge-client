@@ -14,9 +14,19 @@ module KyaBridgeClient
 
 
     describe "#next_posts" do
-      it "it sends a request for page zero" do
-        cursor.next_posts
-        expect(api_client).to have_received(:posts).with(:page => 0)
+      context "first call" do
+        it "it sends a request for page zero" do
+          cursor.next_posts
+          expect(api_client).to have_received(:posts).with(:page => 0)
+        end
+      end
+
+      context "second call" do
+        it "sends a request for page 1" do
+          cursor.next_posts
+          cursor.next_posts
+          expect(api_client).to have_received(:posts).with(:page => 1)
+        end
       end
     end
 
