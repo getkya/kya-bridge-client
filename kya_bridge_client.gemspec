@@ -9,10 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Sam Phippen"]
   spec.email         = ["samphippen@googlemail.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = " to rubygems.org, or delete to allow pushes to any server."
-  end
-
   spec.summary       = %q{the summary}
   spec.description   = %q{the description}
   spec.homepage      = "the url"
