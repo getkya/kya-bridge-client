@@ -11,6 +11,7 @@ module KyaBridgeClient
     end
 
     def each(&blk)
+      p "each called"
       posts.each(&blk)
     end
 
