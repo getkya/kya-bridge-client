@@ -11,8 +11,6 @@ module KyaBridgeClient
         break unless post_cursor.has_more_posts?
       end
 
-      p "returning post collection"
-
       post_collection
     end
 

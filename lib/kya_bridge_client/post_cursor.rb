@@ -6,7 +6,6 @@ module KyaBridgeClient
     end
 
     def next_posts
-      p page_number
       @post_result = api_client.posts(:page => page_number).tap {
         increment_page_number!
       }
