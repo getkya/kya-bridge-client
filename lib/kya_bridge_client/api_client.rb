@@ -9,7 +9,7 @@ module KyaBridgeClient
     end
 
     def posts(params)
-      post_result_factory.call(JSON.parse(http.get("/kya-api/posts/", params).body))
+      post_result_factory.call(JSON.parse(http.get("/kya-api/posts/", params.merge("_" => Time.now.utc.to_i)).body))
     end
 
     private
