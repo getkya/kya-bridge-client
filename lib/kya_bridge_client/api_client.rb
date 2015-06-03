@@ -49,7 +49,7 @@ module KyaBridgeClient
       end
 
       def params_with_time_header
-        params.merge("_" => Time.now.utc.to_i)
+        params.merge("_" => (Time.now.utc.to_f*1000).to_i)
       end
     end
 
