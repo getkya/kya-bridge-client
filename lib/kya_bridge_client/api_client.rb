@@ -5,16 +5,17 @@ module KyaBridgeClient
   class ApiClient
     def initialize(args)
       @domain              = args.fetch(:domain)
+      @root                = args.fetch(:root)
       @post_result_factory = args.fetch(:post_result_factory)
     end
 
     def posts(params)
-      post_result_factory.call(PostApiCall.new(http, params).call)
+      post_result_factory.call(PostApiCall.new(http, params.merge(:root => root)).call)
     end
 
     private
 
-    attr_reader :domain,  :post_result_factory
+    attr_reader :domain,  :post_result_factory, :root
 
 
     def http
@@ -31,6 +32,8 @@ module KyaBridgeClient
     class PostApiCall
       def initialize(http, params)
         @params = params
+        @root = params.fetch(:root)
+        params.delete(:root)
         @http = http
       end
 
@@ -42,10 +45,10 @@ module KyaBridgeClient
 
       private
 
-      attr_reader :http, :params
+      attr_reader :http, :params, :root
 
       def get_endpoint_response
-        http.get("/kya-api/posts/", params_with_time_header).body
+        http.get("#{root}/kya-api/posts/", params_with_time_header).body
       end
 
       def params_with_time_header

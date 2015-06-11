@@ -6,17 +6,17 @@ require "kya_bridge_client/post_result"
 require "kya_bridge_client/post_collection"
 
 module KyaBridgeClient
-  def self.get_posts(domain)
-    PostRetreiver.new(PostCollection.new, post_cursor_for(domain)).call
+  def self.get_posts(domain, root="")
+    PostRetreiver.new(PostCollection.new, post_cursor_for(domain, root)).call
   end
 
   private
 
-  def self.post_cursor_for(domain)
-    PostCursor.new(:api_client => api_client_for(domain))
+  def self.post_cursor_for(domain, root)
+    PostCursor.new(:api_client => api_client_for(domain, root))
   end
 
-  def self.api_client_for(domain)
-    ApiClient.new(:domain => domain, :post_result_factory => PostResult.method(:new))
+  def self.api_client_for(domain, root)
+    ApiClient.new(:domain => domain, :root => root, :post_result_factory => PostResult.method(:new))
   end
 end
