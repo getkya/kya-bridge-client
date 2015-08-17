@@ -1,5 +1,6 @@
 require "json"
 require "faraday"
+require 'faraday_middleware/response/follow_redirects'
 
 module KyaBridgeClient
   class ApiClient
@@ -24,6 +25,7 @@ module KyaBridgeClient
 
     def make_http_connection
       Faraday.new(domain) do |conn|
+        conn.use FaradayMiddleware::FollowRedirects
         conn.request :url_encoded
         conn.adapter Faraday.default_adapter
       end
