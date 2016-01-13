@@ -50,5 +50,15 @@ describe KyaBridgeClient do
         expect(KyaBridgeClient.get_root_for_domain(wordpress_details)).to eq(nil)
       end
     end
+
+    context "for geeksnack.com" do
+      let(:domain)  { "besttechie.com" }
+      let(:port)    { 443 }
+      let(:use_ssl) { true }
+
+      it "returns ''" do
+        expect(KyaBridgeClient.get_root_for_domain(wordpress_details)).to eq("")
+      end
+    end
   end
 end
