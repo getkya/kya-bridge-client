@@ -60,5 +60,17 @@ describe KyaBridgeClient do
         expect(KyaBridgeClient.get_root_for_domain(wordpress_details)).to eq("")
       end
     end
+
+    context "localdocker:8000" do
+      let(:domain)  { "localdocker.dev" }
+      let(:port)    { 8000 }
+      let(:use_ssl) { false }
+
+      it "does not raise an exception" do
+        expect {
+          KyaBridgeClient.get_root_for_domain(wordpress_details)
+        }.not_to raise_exception
+      end
+    end
   end
 end

@@ -30,13 +30,11 @@ module KyaBridgeClient
       response = connection(domain).get("#{path}/kya-api/present/")
       p response
       p response.body
-      begin
-        response.status != 404 && JSON.parse(response.body).fetch("present")
-      rescue JSON::ParserError
-        false
-      rescue Faraday::ConnectionFailed
-        false
-      end
+      response.status != 404 && JSON.parse(response.body).fetch("present")
+    rescue JSON::ParserError
+      false
+    rescue Faraday::ConnectionFailed
+      false
     end
 
     def possible_paths
