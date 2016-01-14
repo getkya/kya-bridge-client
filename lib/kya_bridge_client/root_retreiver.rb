@@ -34,6 +34,8 @@ module KyaBridgeClient
         response.status != 404 && JSON.parse(response.body).fetch("present")
       rescue JSON::ParserError
         false
+      rescue Faraday::ConnectionFailed
+        false
       end
     end
 
