@@ -47,6 +47,7 @@ module KyaBridgeClient
 
     def connection(domain)
       Faraday::Connection.new(domain) do |conn|
+        conn.use FaradayMiddleware::FollowRedirects
         conn.request :url_encoded
         conn.adapter Faraday.default_adapter
       end
