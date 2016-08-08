@@ -9,14 +9,6 @@ module KyaBridgeClient
         domain_has_kya_on_path?(path)
       }
 
-      if result.nil?
-        @domain = domain.gsub("://", "://www.")
-
-        result = possible_paths.find { |path|
-          domain_has_kya_on_path?(path)
-        }
-      end
-
       result
     end
 
@@ -40,8 +32,6 @@ module KyaBridgeClient
     def possible_paths
       [
         "",
-        "/blog",
-        "/ebass",
       ]
     end
 

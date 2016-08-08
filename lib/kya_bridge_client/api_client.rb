@@ -41,7 +41,10 @@ module KyaBridgeClient
 
       def call
         BackoffState.new.run {
-          JSON.parse(get_endpoint_response)
+          response = get_endpoint_response
+          # puts response 
+          # puts params[:page]
+          JSON.parse(response)
         }
       end
 
